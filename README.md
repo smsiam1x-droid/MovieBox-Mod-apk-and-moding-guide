@@ -11,23 +11,81 @@ The MovieBox Mod includes several key enhancements designed to streamline the us
 *   **Premium Access**: Use collected coins to unlock premium features and accounts within the application.
 *   **Ad-Free Experience**: Integrated modifications to remove intrusive advertisements.
 
-## 🛠️ Modding Guide
+## 🛠️ Prerequisites
 
-This repository also serves as a **Modding Guide** for educational purposes, covering the following topics:
+To replicate this project or understand the underlying modifications, you will need:
 
-1.  **Decompilation**: Using tools like `apktool` to extract source files and resources.
-2.  **Smali Modification**: Identifying and editing Smali code to alter application behavior.
-3.  **Logic Interception**: Techniques for bypassing server-side checks and local reward triggers.
-4.  **Recompilation & Signing**: Rebuilding the APK and signing it for installation on Android devices.
+*   **MT Manager** (Android) or **APKTool** (PC).
+*   The original **MovieBox APK** file.
+*   Basic understanding of **Smali Code** and **Hexadecimal** values.
 
-## 📦 Installation
+## 👨‍💻 Developer's Guide (Technical Analysis)
 
-To install the modded APK, follow these steps:
+This section provides a step-by-step documentation of the logic modifications performed on the application.
 
-1.  **Download**: Obtain the latest APK from the [Releases](https://github.com/smsiam1x-droid/MovieBox-Mod-apk-and-moding-guide/releases) section.
-2.  **Enable Unknown Sources**: Go to your device settings and allow installation from unknown sources.
-3.  **Install**: Open the downloaded file and follow the on-screen instructions.
-4.  **Launch**: Open MovieBox and enjoy unlimited access.
+*   **Target File**: `classes6.dex`
+*   **Target Class**: `yo/k` (Package: `yo`, Class: `k`)
+
+### 1. Bypassing "Watch & Earn" (Video Timer)
+**Goal**: Force the app to believe the user has watched 300 minutes of content.
+*   **Target Method**: `L()I`
+*   **Modification**: Return Hex `0x12c` (Decimal: 300).
+
+```smali
+.method public final L()I
+    .registers 2
+    # Returns 300 minutes
+    const/16 v0, 0x12c
+    return v0
+.end method
+```
+
+### 2. Bypassing "Play Games" (Game Timer)
+**Goal**: Satisfy the "Play for 30 seconds" condition instantly.
+*   **Target Method**: `K()I`
+*   **Modification**: Return Hex `0x64` (Decimal: 100 seconds).
+
+```smali
+.method public final K()I
+    .registers 2
+    # Returns 100 seconds
+    const/16 v0, 0x64
+    return v0
+.end method
+```
+
+### 3. Bypassing "Watch Ads" (Ad Counter)
+**Goal**: Force the ad counter to show 10 ads watched.
+*   **Target Method**: `N()I`
+*   **Modification**: Return Hex `0xa` (Decimal: 10).
+
+```smali
+.method public final N()I
+    .registers 2
+    # Returns 10 ads
+    const/16 v0, 0xa
+    return v0
+.end method
+```
+
+## 📱 User Guide (How to Use)
+
+If you are testing the modified APK, please follow these instructions carefully to ensure the modifications take effect:
+
+1.  **Install**: Install the modified APK on your Android device.
+2.  **⚠️ IMPORTANT STEP (Clear Data)**:
+    *   Before opening the app for the first time, go to **Settings > Apps > MovieBox**.
+    *   Select **Storage** and tap **Clear Data**.
+    *   *Note: This removes old logic and cached data stored in the MMKV/cache.*
+3.  **Launch**: Open the application.
+4.  **Claim**: Navigate to the rewards section. You should see "Claim" buttons enabled for all tasks!
+
+## ❓ Troubleshooting
+
+*   **Issue**: Buttons still say "Go" or "Play".
+    *   **Fix**: You likely didn't clear the app data. Uninstall the app, reinstall, and **Clear Data** before opening.
+*   **Issue**: App crashing on startup.
+    *   **Fix**: Ensure you signed the APK correctly (Auto-sign) after modifying the `classes.dex` file.
 
 ## ⚠️ Disclaimer
 
@@ -35,7 +93,7 @@ To install the modded APK, follow these steps:
 
 ## 🤝 Contributing
 
-Contributions are welcome! If you have improvements for the mod or additional modding techniques to share, please:
+Feel free to fork this repository or star ⭐ it if you found this guide helpful for your studies! Contributions are welcome:
 
 1.  Fork the repository.
 2.  Create a new branch (`git checkout -b feature/improvement`).
@@ -46,3 +104,6 @@ Contributions are welcome! If you have improvements for the mod or additional mo
 ## 📜 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+*Happy Learning! 🎓*
