@@ -24,7 +24,8 @@ To replicate this project or understand the underlying modifications, you will n
 This section provides a step-by-step documentation of the logic modifications performed on the application.
 
 *   **Target File**: `classes6.dex`
-*   **Target Class**: `yo/k` (Package: `yo`, Class: `k`)
+*   **search for**: `kv_watch_ad_claim`
+*   **You will find a Target Class**: `yo/k` (Package: `yo`, Class: `k`)
 
 ### 1. Bypassing "Watch & Earn" (Video Timer)
 **Goal**: Force the app to believe the user has watched 300 minutes of content.
